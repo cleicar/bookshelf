@@ -5,20 +5,26 @@ module Types
 
     # Add root-level fields here.
 
-    field :title, String, null: false, description: "An example field added by the generator" do 
+    field :title, String, null: false, description: "An example field added by the generator" do
       argument :name, String, required: true
     end
 
-    field :author, Types::AuthorType, null: true, description: "Returns the author" do 
+    field :author, Types::AuthorType, null: true, description: "Returns the author" do
       argument :id, ID, required: true
     end
 
     def title(name:)
       "Hello #{name}!"
     end
-    
+
     def author(id:)
       Author.where(id: id).first
+    end
+
+    field :authors, [Types::AuthorType], null: false
+
+    def authors
+      Author.all
     end
   end
 end
